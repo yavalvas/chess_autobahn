@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+{% block html_head %}
+    <head>
+    <title>Chess GudOk</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="/static/style.css" rel="stylesheet" type="text/css" />
+    </head>
+{% endblock %}
+<body>
+<div id="topbar">
+  <div id="topbarleft"> </div>
+  <div id="topbarright">
+    <ul>
+      {% block home_link %}<li><a href="#">Home</a></li>{% endblock %}
+      <li><a href="game.html">Play chess</a></li>
+      <li><a href="#">Forum</a></li>
+      <li><a href="#">Rules</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  {% block short_info %}
+    <h1>Uber chess</h1>
+    <h2><em>Chess by Alexander Yavorskiy</em></h2>
+  {% endblock %}
+</div>
+<div id="content">
+  {% block left_main_content %}
+  <div id="contentleft">
+    <h1>Main Content</h1>
+    <p class="small"><img src="/static/images/clock.gif" alt="" /> December 28, 2014</p>
+    <blockquote>sometext</blockquote>
+    <p>Flud flud flud</p>
+    <p><a href="#"><img src="/static/images/document.gif" alt="" /> Read more</a> | <a href="#"><img src="/static/images/comment.gif" alt="" /> Comments</a></p>
+    <h1>Sub Content</h1>
+    <p class="small"><img src="/static/images/clock.gif" alt="" /> December 28, 2014</p>
+    <p>tut eshe kakaya to tufta</p>
+    <p><a href="#"><img src="/static/images/document.gif" alt="" /> Read more</a> | <a href="#"><img src="/static/images/comment.gif" alt="" /> Comments</a></p>
+    <div style="clear:both;"></div>
+  </div>
+  {%  endblock %}
+  <div id="right_sidebar">
+    <ul>
+      <li id="Login_reg">
+	<form id="form_login" name="form_login" method="post" action="" >
+        	<h2>About Us</h2>
+        	<input type="text" id="login" name="login">
+		<input type="password" id="password" name="password">
+		<input type="submit" value="Залогиниться">	
+	</form>
+      </li>
+      <li id="Visit">
+        <h2>Worth a visit</h2>
+        <ul>
+          <li><a href="#" id="current">Snapp Happy</a></li>
+          <li><a href="#">Open Design Community</a></li>
+          <li><a href="#">Andreas Viklund</a></li>
+          <li><a href="#">James Koster</a></li>
+          <li><a href="#"> CSS Play</a></li>
+        </ul>
+      </li>
+      <li id="Articles">
+        <h2>Recent Articles</h2>
+        <ul>
+          <li><a href="#">Embedding Windows Media Files</a></li>
+          <li><a href="#">Installing Apache PHP &amp; MySQL</a></li>
+        </ul>
+      </li>
+      <li id="Archives">
+        <h2>Monthly Archives</h2>
+        <ul>
+          <li><a href="#">February 2007</a></li>
+          <li><a href="#">January 2007</a></li>
+          <li><a href="#">December 2006</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<div style="clear:both;"></div>
+<div id="footerbg">
+  <div id="footer">
+    <div id="footerleft">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="#">Listamatic</a></li>
+        <li><a href="#"> Layout Gala</a></li>
+        <li><a href="#"> Bluerobot</a></li>
+      </ul>
+    </div>
+    <div id="footermiddle">
+      <h2>Blogs</h2>
+      <ul>
+        <li><a href="#">SV Horizons</a></li>
+        <li><a href="#">Andreas Viklund</a></li>
+        <li><a href="#">James Koster</a></li>
+      </ul>
+    </div>
+    <div id="footerright">
+      <h2>Design Showcase</h2>
+      <ul>
+        <li><a href="#">CSS Vault</a></li>
+        <li><a href="#">CSS Zen Garden</a></li>
+        <li><a href="#">CSS Heaven</a></li>
+      </ul>
+    </div>
+    <div style="clear:both;"></div>
+  </div>
+</div>
+<div id="credits">
+</div>
+</body>
+</html>
