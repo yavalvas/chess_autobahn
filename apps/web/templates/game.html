@@ -1,0 +1,161 @@
+{% extends "index.html" %}
+{% block html_head %}
+    <head>
+    <title>Chess GudOk</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link href="/static/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/static/css/chessboard-0.3.0.css" />
+    <script src="/static/js/chess.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    </head>
+{% endblock %}
+{% block home_link %}<li><a href="/">Home</a></li>{% endblock %}
+{% block short_info %}
+    <h1>Your Site Name</h1>
+    <h2><em>company slogan here ....</em></h2>
+{% endblock %}
+{% block left_main_content %}
+<div id="contentleft">
+<div id="board" style="width: 400px"></div>
+<p>Status: <span id="status"></span></p>
+<p>FEN: <span id="fen"></span></p>
+<p>PGN: <span id="pgn"></span></p>
+<!-- end example HTML --->
+
+<script src="/static/js/json3.min.js"></script>
+<!--<script src="js/jquery-1.10.1.min.js"></script>-->
+<script src="/static/js/chessboard-0.3.0.js"></script>
+<script>
+var init = function() {
+    var wsuri, wsproto="ws";
+//    if(window.location.protocol == "http:"){
+//        wsproto = "ws";
+//    }
+//    else {
+//        wsproto = "wss"
+//    }
+    if(window.location.protocol === "file:"){
+    wsuri = wsproto+"://localhost:8011";
+    } else {
+    wsuri = wsproto+"://"+window.location.hostname+":8011";
+    }
+    if ("WebSocket" in window){
+    sock = new WebSocket(wsuri);
+    } else if ("MozWebSocket" in window){
+    sock = new MozWebSocket(wsuri);
+    } else {
+    log("Browser doesn't support WebSocket!");
+    window.location = "http://autobahn.ws/unsupportedbrowser";
+    }
+    if (sock){
+    sock.onopen = function(){
+        //TODO: что слать поначалу. сделать форму с именем игры, именем пользователя. Пока два файла)
+        sock.send(JSON.stringify({/*create_game: 1,*/username: "Petia", refresh_game_list: 1}));
+//            sock.send(JSON.stringify({create_game: 1, refresh_game_list: 1}));
+        log("Connected to" + wsuri);
+    };
+    sock.onclose = function(e){
+        log("Connection closed (wasClean = " + e.wasClean + ", code = " + e.code + ", reason = '" + e.reason + "')");
+        sock = null;
+    };
+    sock.onmessage = function(e) {
+        log("Got echo: " + e.data);
+    }
+    }
+    function log(message){
+    console.log(sock);
+    console.log(message);
+    //Куда-то вывод
+    }
+    //--- start example JS ---
+    var board,
+      game = new Chess(),
+      statusEl = $('#status'),
+      fenEl = $('#fen'),
+      pgnEl = $('#pgn');
+
+    // do not pick up pieces if the game is over
+    // only pick up pieces for the side to move
+    var onDragStart = function(source, piece, position, orientation) {
+      if (game.game_over() === true ||
+      (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+      (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+    return false;
+      }
+    };
+
+    var onDrop = function(source, target) {
+      // see if the move is legal
+      var move = game.move({
+    from: source,
+    to: target,
+    promotion: 'q' // NOTE: always promote to a queen for example simplicity
+      });
+
+      // illegal move
+      if (move === null) return 'snapback';
+
+      updateStatus();
+    };
+
+    // update the board position after the piece snap
+    // for castling, en passant, pawn promotion
+    var onSnapEnd = function() {
+      board.position(game.fen());
+    };
+
+    var updateStatus = function() {
+      var status = '';
+
+      var moveColor = 'White';
+      if (game.turn() === 'b') {
+    moveColor = 'Black';
+      }
+
+      // checkmate?
+      if (game.in_checkmate() === true) {
+    status = 'Game over, ' + moveColor + ' is in checkmate.';
+      }
+
+      // draw?
+      else if (game.in_draw() === true) {
+    status = 'Game over, drawn position';
+      }
+
+      // game still on
+      else {
+    status = moveColor + ' to move';
+
+    // check?
+    if (game.in_check() === true) {
+      status += ', ' + moveColor + ' is in check';
+    }
+      }
+
+      statusEl.html(status);
+      fenEl.html(game.fen());
+      pgnEl.html(game.pgn());
+    };
+
+    var cfg = {
+      draggable: true,
+      position: 'start',
+      onDragStart: onDragStart,
+      dropOffBoard: 'trash',
+      onDrop: onDrop,
+      onSnapEnd: onSnapEnd,
+      //draggable: true,
+      //dropOffBoard: 'trash',
+      sparePieces: true
+    };
+    board = new ChessBoard('board', cfg);
+
+    updateStatus();
+    //--- end example JS ---
+
+}; // end init()
+$(document).ready(init);
+</script>
+</div>
+{% endblock %}

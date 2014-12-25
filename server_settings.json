@@ -1,0 +1,8 @@
+{
+    "apps"      : [
+        "apps.web.main_resource"
+    ],
+    "orm"       : [
+        "orm.admin"
+    ]
+}
