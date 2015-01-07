@@ -26,6 +26,8 @@ def setUp():
     from orm.database_init import init_db, db_session
     from apps.web import constants
     init_db()
+    from pdb import set_trace
+    set_trace()
     from apps.web import main_resource
     root = main_resource.Root()
     reactor.listenTCP(8000, server.Site(main_resource.Root()))
