@@ -33,10 +33,11 @@ class LogConnections(Base):
     __tablename__ = 'log_connections'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
-    joined_date = Column(DateTime, onupdate=datetime.datetime.now)
-    def __init__(self, user_id=None):
+    joined_date = Column(DateTime, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    def __init__(self, user_id=None, joined_date=None):
         self.user_id = user_id
-
+	self.joined_date = datetime.datetime.now()
+	
 
 class HistoryGames(Base):
     __tablename__ = 'history_games'
