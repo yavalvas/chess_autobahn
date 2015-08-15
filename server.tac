@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Приложение Twisted."""
-
-# Поприветствуем пользователя
+"""Установки twisted приложения"""
 
 from twisted.internet import reactor
 from orm import exceptions
@@ -12,9 +10,7 @@ print "-" * 79
 print "\tStarting chess_server version %d.%d%s%d" % constants.VERSION_TUPLE
 print "-" * 79
 
-reactor.callWhenRunning(exceptions.debug, "-" * 40)
 reactor.callWhenRunning(exceptions.debug, "\tLoading classes and applications")
-reactor.callWhenRunning(exceptions.debug, "-" * 40)
 
 # Инициализируем сервер Twisted
 
